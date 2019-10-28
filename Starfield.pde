@@ -5,7 +5,11 @@ void setup()
 {
   size(500,500);
   while (i>=0) {
-    aBunch[i] = new Particle();
+    if (Math.random()*50>35) {
+      aBunch[i] = new OddballParticle();
+    } else {
+      aBunch[i] = new Particle();
+    }
     i--;
   }
   i = aBunch.length-1;
@@ -37,12 +41,12 @@ class Particle
     myY = myY + Math.sin(myAngle)*mySpeed;
     mySpeed+=0.001;
     mySize+=0.025;
-    if (myX>=size+10||myX<=-10) {
+    if (myX>=size1+10||myX<=-10) {
       myX = size1*0.5;
       myY = size1*0.5;
       mySize = 1;
       mySpeed = Math.random()*3+1;
-     } else if (myY>=size+10||myY<=-10) {
+     } else if (myY>=size1+10||myY<=-10) {
       myX = size1*0.5;
       myY = size1*0.5;
       mySize = 1;
@@ -56,9 +60,38 @@ class Particle
   }
 }
  
-class OddballParticle //inherits from Particle
+class OddballParticle extends Particle
 {
-  //your code here
+  double myXSpeed, myYSpeed;
+  OddballParticle() {
+    myX = -100;
+    myY = Math.random()*500;
+    myXSpeed = Math.random()*4+1;
+    myYSpeed = Math.random()*10-5;
+    myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+  }
+  void move() {
+    myX = myX + myXSpeed;
+    myY = myY + myYSpeed;
+    if (myX>=600) {
+      myX = -100;
+      myY = Math.random()*500;
+      myXSpeed = Math.random()*4+1;
+      myYSpeed = Math.random()*10-5;
+      myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+    }
+    if (myY>=600||myY<=-100) {
+      myX = -100;
+      myY = Math.random()*500;
+      myXSpeed = Math.random()*4+1;
+      myYSpeed = Math.random()*10-5;
+      myColor = color((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255));
+    }
+  }
+  void show() {
+    fill(myColor);
+    ellipse((float)myX,(float)myY,20,20);
+  }
 }
 
 
